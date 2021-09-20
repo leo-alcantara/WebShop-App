@@ -1,13 +1,18 @@
 package the.bug.web_shop_system.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
 public class ProductCategory {
 
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String productCategoryId;
-    private String value;
     private String productCategoryName;
 
     @ManyToMany (cascade = {CascadeType.DETACH,
@@ -24,10 +29,9 @@ public class ProductCategory {
     public ProductCategory() {
     }
 
-    public ProductCategory(String productCategoryId, String value, String productCategoryName,
+    public ProductCategory(String productCategoryId, String productCategoryName,
                            Set<Product> productWithCategory) {
         this.productCategoryId = productCategoryId;
-        this.value = value;
         this.productCategoryName = productCategoryName;
         this.productWithCategory = productWithCategory;
     }
@@ -47,14 +51,6 @@ public class ProductCategory {
 
     public void setProductCategoryId(String productCategoryId) {
         this.productCategoryId = productCategoryId;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public String getProductCategoryName() {
@@ -78,19 +74,18 @@ public class ProductCategory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductCategory that = (ProductCategory) o;
-        return Objects.equals(getValue(), that.getValue()) && Objects.equals(getProductCategoryName(), that.getProductCategoryName());
+        return  Objects.equals(getProductCategoryName(), that.getProductCategoryName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getValue(), getProductCategoryName());
+        return Objects.hash(getProductCategoryName());
     }
 
     @Override
     public String toString() {
         return "ProductCategory{" +
                 "productCategoryId='" + productCategoryId + '\'' +
-                ", value='" + value + '\'' +
                 ", productCategoryName='" + productCategoryName + '\'' +
                 '}';
     }

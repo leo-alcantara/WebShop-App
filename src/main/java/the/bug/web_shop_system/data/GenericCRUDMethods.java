@@ -1,6 +1,7 @@
 package the.bug.web_shop_system.data;
 
 import java.util.Collection;
+import java.util.Set;
 
 public interface GenericCRUDMethods <T,ID>{
 
