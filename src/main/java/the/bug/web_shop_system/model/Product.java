@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class Product {
     @JoinTable(name = "product_and_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "product_category_id"))
-    private Set<ProductCategory> productCategories;
+    private Set<ProductCategory> productCategories = new HashSet<>();
 
     public Product() {
     }
@@ -38,6 +39,15 @@ public class Product {
         this.productDescription = productDescription;
         this.productPrice = productPrice;
         this.productCategories = productCategories;
+    }
+
+    //Convenience Methods
+    public void addProductCategory(ProductCategory productCategory){
+        productCategories.add(productCategory);
+    }
+
+    public void removeProductCategory(ProductCategory productCategory){
+        productCategories.remove(productCategory);
     }
 
     public String getProductId() {

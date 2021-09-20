@@ -18,6 +18,7 @@ public class Orders {
     private LocalDate lastUpdated;
     private BigDecimal priceTotal;
     private Boolean orderStatus;
+
     @OneToMany(cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
@@ -25,6 +26,7 @@ public class Orders {
             fetch = FetchType.LAZY,
             mappedBy = "orders")
     private Set<OrderItem> orderItems;
+
     @ManyToOne(cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
@@ -43,6 +45,17 @@ public class Orders {
         this.orderStatus = orderStatus;
         this.orderItems = orderItems;
         this.customer = customer;
+    }
+
+    //Convenience Methods
+    public void addOrderItem(OrderItem orderItem){
+        orderItems.add(orderItem);
+        orderItem.setOrders(this);
+    }
+
+    public void removeOrderItem(OrderItem orderItem){
+        orderItem.setOrders(null);
+        orderItems.remove(orderItem);
     }
 
     public String getOrderId() {

@@ -1,8 +1,6 @@
 package the.bug.web_shop_system.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,8 +14,10 @@ public class ProductCategory {
             CascadeType.MERGE,
             CascadeType.PERSIST,
             CascadeType.REFRESH},
-            fetch = FetchType.LAZY,
-    mappedBy = "productCategories")
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "product_and_category",
+            joinColumns = @JoinColumn(name = "product_category_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> productWithCategory;
 
 
@@ -30,6 +30,15 @@ public class ProductCategory {
         this.value = value;
         this.productCategoryName = productCategoryName;
         this.productWithCategory = productWithCategory;
+    }
+
+    //Convenience Methods
+    public void addProductCategory(Product product){
+        productWithCategory.add(product);
+    }
+
+    public void removeProductCategory(Product product){
+        productWithCategory.remove(product);
     }
 
     public String getProductCategoryId() {
