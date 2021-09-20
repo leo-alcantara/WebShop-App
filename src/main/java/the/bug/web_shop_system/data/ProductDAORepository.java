@@ -48,7 +48,7 @@ public class ProductDAORepository implements ProductDAO {
 
     @Override
     @Transactional
-    //Find by id method finds a method using its id and returns the found product
+    //Find by id method finds a product using its id and returns the found product
     public Product findById(String productId) {
         return entityManager.find(Product.class, productId);
     }
