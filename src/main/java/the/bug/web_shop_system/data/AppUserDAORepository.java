@@ -41,7 +41,7 @@ public class AppUserDAORepository implements AppUserDAO {
     @Transactional
     //Find All method finds all appUsers and returns a collection with all the found Appusers
     public List<AppUser> findAll() {
-        return entityManager.createQuery("SELECT a FROM AppUser a").getResultList();
+        return entityManager.createQuery("SELECT a FROM AppUser a", AppUser.class).getResultList();
     }
 
     @Override

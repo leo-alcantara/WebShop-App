@@ -42,20 +42,26 @@ public class AddressDAORepository implements AddressDAO {
     @Transactional
     //Find All method finds all addresses and returns a collection with all the found addresses
     public List<Address> findAll() {
-        return entityManager.createQuery("SELECT a FROM Address a").getResultList();
+        return entityManager.createQuery("SELECT a FROM Address a", Address.class).getResultList();
     }
 
     @Override
     @Transactional
     //Find by id method finds an address using its id and returns the found address
-    public Address findById(String address) {
+    public Address findById(String address) throws ExceptionManager {
+        if (address == null) {
+            throw new ExceptionManager("Product can not be null.");
+        }
         return entityManager.find(Address.class, address);
     }
 
     @Override
     @Transactional
     //Update method updates an address' attributes and returns the updated address
-    public Address update(Address address) {
+    public Address update(Address address) throws ExceptionManager {
+        if (address == null) {
+            throw new ExceptionManager("Product can not be null.");
+        }
         return entityManager.merge(address);
     }
 

@@ -44,20 +44,26 @@ public class ProductDAORepository implements ProductDAO {
     @Transactional
     //Find All method finds all products and returns a collection with all the found products
     public List<Product> findAll() {
-        return entityManager.createQuery("SELECT p FROM Product p").getResultList();
+        return entityManager.createQuery("SELECT p FROM Product p", Product.class).getResultList();
     }
 
     @Override
     @Transactional
     //Find by id method finds a product using its id and returns the found product
-    public Product findById(String productId) {
+    public Product findById(String productId) throws ExceptionManager {
+        if (productId == null) {
+            throw new ExceptionManager("Product can not be null.");
+        }
         return entityManager.find(Product.class, productId);
     }
 
     @Override
     @Transactional
     //Update method updates a product's attributes and returns the updated product
-    public Product update(Product product) {
+    public Product update(Product product) throws ExceptionManager {
+        if (product == null) {
+            throw new ExceptionManager("Product can not be null.");
+        }
         return entityManager.merge(product);
     }
 

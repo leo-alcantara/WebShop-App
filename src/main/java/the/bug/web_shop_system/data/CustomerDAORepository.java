@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import the.bug.web_shop_system.exceptions.ExceptionManager;
 import the.bug.web_shop_system.model.Customer;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;

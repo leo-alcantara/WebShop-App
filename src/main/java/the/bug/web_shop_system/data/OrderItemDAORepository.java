@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import the.bug.web_shop_system.exceptions.ExceptionManager;
 import the.bug.web_shop_system.model.OrderItem;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -42,7 +41,7 @@ public class OrderItemDAORepository implements OrderItemDAO {
     @Transactional
     //Find All method finds all Order Items and returns a collection with all the found items
     public List<OrderItem> findAll() {
-        return entityManager.createQuery("SELECT o FROM OrderItem o").getResultList();
+        return entityManager.createQuery("SELECT o FROM OrderItem o", OrderItem.class).getResultList();
     }
 
     @Override
