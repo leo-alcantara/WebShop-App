@@ -2,11 +2,12 @@ package the.bug.web_shop_system.data;
 
 import the.bug.web_shop_system.model.Customer;
 
-import java.util.Set;
+import java.util.List;
+
 
 public interface CustomerDAO extends GenericCRUDMethods<Customer, String>{
 
-    Set<Customer> findCustomerByName (String customerName);
+    List<Customer> findCustomerByName (String customerName);
 
     Customer findCustomerByEmail (String customerEmail);
 

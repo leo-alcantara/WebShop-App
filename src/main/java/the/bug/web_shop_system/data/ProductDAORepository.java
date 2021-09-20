@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.List;
 
 
 @Repository
@@ -42,7 +43,7 @@ public class ProductDAORepository implements ProductDAO {
     @Override
     @Transactional
     //Find All method finds all products and returns a collection with all the found products
-    public Collection<Product> findAll() {
+    public List<Product> findAll() {
         return entityManager.createQuery("SELECT p FROM Product p").getResultList();
     }
 

@@ -7,7 +7,7 @@ import the.bug.web_shop_system.model.AppUser;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class AppUserDAORepository implements AppUserDAO {
@@ -40,7 +40,7 @@ public class AppUserDAORepository implements AppUserDAO {
     @Override
     @Transactional
     //Find All method finds all appUsers and returns a collection with all the found Appusers
-    public Collection<AppUser> findAll() {
+    public List<AppUser> findAll() {
         return entityManager.createQuery("SELECT a FROM AppUser a").getResultList();
     }
 

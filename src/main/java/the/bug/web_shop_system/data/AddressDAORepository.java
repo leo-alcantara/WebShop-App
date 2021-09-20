@@ -8,7 +8,7 @@ import the.bug.web_shop_system.model.Address;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class AddressDAORepository implements AddressDAO {
@@ -18,7 +18,7 @@ public class AddressDAORepository implements AddressDAO {
 
     @Override
     @Transactional
-    //Create method persists a address and returns the persisted address
+    //Create method persists an address and returns the persisted address
     public Address create(Address address) throws ExceptionManager {
         if (address == null) {
             throw new ExceptionManager("Product can not be null.");
@@ -41,13 +41,13 @@ public class AddressDAORepository implements AddressDAO {
     @Override
     @Transactional
     //Find All method finds all addresses and returns a collection with all the found addresses
-    public Collection<Address> findAll() {
+    public List<Address> findAll() {
         return entityManager.createQuery("SELECT a FROM Address a").getResultList();
     }
 
     @Override
     @Transactional
-    //Find by id method finds a address using its id and returns the found address
+    //Find by id method finds an address using its id and returns the found address
     public Address findById(String address) {
         return entityManager.find(Address.class, address);
     }

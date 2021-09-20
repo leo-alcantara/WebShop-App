@@ -8,7 +8,7 @@ import the.bug.web_shop_system.model.OrderItem;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 public class OrderItemDAORepository implements OrderItemDAO {
@@ -18,9 +18,10 @@ public class OrderItemDAORepository implements OrderItemDAO {
 
     @Override
     @Transactional
+    //Create method persists an Order Item and returns the persisted item
     public OrderItem create(OrderItem orderItem) throws ExceptionManager {
         if (orderItem == null) {
-            throw new ExceptionManager("Product can not be null.");
+            throw new ExceptionManager("Item can not be null.");
         }
         entityManager.persist(orderItem);
         return orderItem;
@@ -28,9 +29,10 @@ public class OrderItemDAORepository implements OrderItemDAO {
 
     @Override
     @Transactional
+    //Delete method deletes an Order Item and returns the deleted address
     public OrderItem delete(OrderItem orderItem) throws ExceptionManager {
         if (orderItem == null) {
-            throw new ExceptionManager("Product can not be null.");
+            throw new ExceptionManager("Item can not be null.");
         }
         entityManager.remove(orderItem);
         return orderItem;
@@ -38,24 +40,34 @@ public class OrderItemDAORepository implements OrderItemDAO {
 
     @Override
     @Transactional
-    public Collection<OrderItem> findAll() {
+    //Find All method finds all Order Items and returns a collection with all the found items
+    public List<OrderItem> findAll() {
         return entityManager.createQuery("SELECT o FROM OrderItem o").getResultList();
     }
 
     @Override
     @Transactional
-    public OrderItem findById(String orderItemId) {
+    //Find by id method finds an Order Item using its id and returns the found item
+    public OrderItem findById(String orderItemId) throws ExceptionManager {
+        if (orderItemId == null) {
+            throw new ExceptionManager("Item id can not be null.");
+        }
         return entityManager.find(OrderItem.class, orderItemId);
     }
 
     @Override
     @Transactional
-    public OrderItem update(OrderItem orderItem) {
+    //Update method updates an Order Item's attributes and returns the updated Item
+    public OrderItem update(OrderItem orderItem) throws ExceptionManager {
+        if (orderItem == null) {
+            throw new ExceptionManager("Item can not be null.");
+        }
         return entityManager.merge(orderItem);
     }
 
     @Override
     @Transactional
+    //Clear method clears the DB table
     public void clear() {
         entityManager.clear();
     }

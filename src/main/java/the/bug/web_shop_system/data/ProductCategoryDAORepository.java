@@ -1,43 +1,78 @@
 package the.bug.web_shop_system.data;
 
+import org.springframework.stereotype.Repository;
+import the.bug.web_shop_system.exceptions.ExceptionManager;
 import the.bug.web_shop_system.model.ProductCategory;
 
-import java.util.Collection;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
+@Repository
 public class ProductCategoryDAORepository implements ProductCategoryDAO {
 
+    @PersistenceContext
+    EntityManager entityManager;
+
     @Override
-    public ProductCategory create(ProductCategory productCategory) {
-        return null;
+    @Transactional
+    public ProductCategory create(ProductCategory productCategory) throws ExceptionManager {
+        if (productCategory == null) {
+            throw new ExceptionManager("Product can not be null.");
+        }
+        entityManager.persist(productCategory);
+        return productCategory;
     }
 
     @Override
-    public ProductCategory delete(ProductCategory productCategory) {
-        return null;
+    @Transactional
+    public ProductCategory delete(ProductCategory productCategory) throws ExceptionManager {
+        if (productCategory == null) {
+            throw new ExceptionManager("Product can not be null.");
+        }
+        entityManager.remove(productCategory);
+        return productCategory;
     }
 
     @Override
-    public Collection<ProductCategory> findAll() {
-        return null;
+    @Transactional
+    public List<ProductCategory> findAll() {
+        return entityManager.createQuery("SELECT pc FROM ProductCategory pc", ProductCategory.class).getResultList();
     }
 
     @Override
-    public ProductCategory findById(String s) {
-        return null;
+    @Transactional
+    public ProductCategory findById(String productCategoryId) throws ExceptionManager {
+        if (productCategoryId == null) {
+            throw new ExceptionManager("Product Category can not be null.");
+        }
+        return entityManager.find(ProductCategory.class, productCategoryId);
     }
 
     @Override
-    public ProductCategory update(ProductCategory productCategory) {
-        return null;
+    public ProductCategory update(ProductCategory productCategory) throws ExceptionManager {
+        if (productCategory == null) {
+            throw new ExceptionManager("Product Category can not be null.");
+        }
+        return entityManager.merge(productCategory);
     }
 
     @Override
     public void clear() {
-
+        entityManager.clear();
     }
 
     @Override
-    public ProductCategory findProductCategoryByName(String productCategoryByName) {
-        return null;
+    public ProductCategory findProductCategoryByName(String productCategoryByName) throws ExceptionManager {
+        if (productCategoryByName == null) {
+            throw new ExceptionManager("Product Category can not be null.");
+        }
+        Optional<ProductCategory> productCategory = entityManager.createQuery("SELECT pc FROM ProductCategory pc WHERE pc.productCategoryName = ?1", ProductCategory.class)
+                .setParameter(1, productCategoryByName).getResultStream().findFirst();
+        return productCategory.orElseThrow(() -> new ExceptionManager("Product Category not found"));
     }
+
 }

@@ -2,7 +2,7 @@ package the.bug.web_shop_system.data;
 
 import the.bug.web_shop_system.model.Orders;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 public class OrdersDAORepository implements OrdersDAO {
@@ -18,7 +18,7 @@ public class OrdersDAORepository implements OrdersDAO {
     }
 
     @Override
-    public Collection<Orders> findAll() {
+    public List<Orders> findAll() {
         return null;
     }
 
