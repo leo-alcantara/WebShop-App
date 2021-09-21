@@ -38,12 +38,14 @@ public class CustomerDAORepository implements CustomerDAO {
     }
 
     @Override
+    @Transactional
     public List<Customer> findAll() {
         return entityManager.createQuery("SELECT c FROM Customer c", Customer.class)
                 .getResultList();
     }
 
     @Override
+    @Transactional
     public Customer findById(String customerId) throws ExceptionManager {
         if (customerId == null) {
             throw new ExceptionManager("Customer id can not be null.");
@@ -52,6 +54,7 @@ public class CustomerDAORepository implements CustomerDAO {
     }
 
     @Override
+    @Transactional
     public Customer update(Customer customer) throws ExceptionManager {
         if (customer == null) {
             throw new ExceptionManager("Customer can not be null.");
@@ -60,11 +63,13 @@ public class CustomerDAORepository implements CustomerDAO {
     }
 
     @Override
+    @Transactional
     public void clear() {
         entityManager.clear();
     }
 
     @Override
+    @Transactional
     public List<Customer> findCustomerByName(String customerName) throws ExceptionManager {
         if (customerName == null) {
             throw new ExceptionManager("Customer name can not be null.");
@@ -76,6 +81,7 @@ public class CustomerDAORepository implements CustomerDAO {
     }
 
     @Override
+    @Transactional
     public Customer findCustomerByEmail(String customerEmail) throws ExceptionManager {
         if (customerEmail == null) {
             throw new ExceptionManager("Customer email can not be null.");
@@ -86,11 +92,12 @@ public class CustomerDAORepository implements CustomerDAO {
     }
 
     @Override
+    @Transactional
     public Customer findCustomerByUsername(String customerUsername) throws ExceptionManager {
         if (customerUsername == null) {
             throw new ExceptionManager("Customer username can not be null.");
         }
-        Optional<Customer> customer = entityManager.createQuery("SELECT c FROM Customer c WHERE c.userCredentials.username = ?1", Customer.class)
+        Optional<Customer> customer = entityManager.createQuery("SELECT c FROM Customer c JOIN FETCH c.userCredentials AS cu WHERE cu.username = ?1", Customer.class)
                 .setParameter(1, customerUsername).getResultStream().findFirst();
         return customer.orElseThrow(()-> new ExceptionManager("Customer not found"));
     }

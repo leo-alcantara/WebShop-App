@@ -52,6 +52,7 @@ public class ProductCategoryDAORepository implements ProductCategoryDAO {
     }
 
     @Override
+    @Transactional
     public ProductCategory update(ProductCategory productCategory) throws ExceptionManager {
         if (productCategory == null) {
             throw new ExceptionManager("Product Category can not be null.");
@@ -60,11 +61,13 @@ public class ProductCategoryDAORepository implements ProductCategoryDAO {
     }
 
     @Override
+    @Transactional
     public void clear() {
         entityManager.clear();
     }
 
     @Override
+    @Transactional
     public ProductCategory findProductCategoryByName(String productCategoryByName) throws ExceptionManager {
         if (productCategoryByName == null) {
             throw new ExceptionManager("Product Category can not be null.");

@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -77,7 +76,7 @@ public class ProductDAORepository implements ProductDAO {
     @Override
     @Transactional
     //Find Product By Name method finds products with a certain name and returns a collection of products containing that name
-    public Collection<Product> findProductByName(String productName) throws ExceptionManager {
+    public List<Product> findProductByName(String productName) throws ExceptionManager {
         if(productName==null){
             throw new ExceptionManager("Product name can not be null.");
         }
@@ -88,7 +87,7 @@ public class ProductDAORepository implements ProductDAO {
     @Override
     @Transactional
     //Find Product By Price Between method finds products inside a range of price and returns a collection with all the found products
-    public Collection<Product> findProductByPriceBetween(BigDecimal priceLow, BigDecimal priceHigh) throws ExceptionManager {
+    public List<Product> findProductByPriceBetween(BigDecimal priceLow, BigDecimal priceHigh) throws ExceptionManager {
         if(priceLow==null || priceHigh==null){
             throw new ExceptionManager("Parameters can not be null.");
         }
@@ -101,7 +100,7 @@ public class ProductDAORepository implements ProductDAO {
     @Override
     @Transactional
     //Find Product By Category method finds all the products in a determined category and returns a collection of all found products
-    public Collection<Product> findProductByCategory(String categoryName) throws ExceptionManager {
+    public List<Product> findProductByCategory(String categoryName) throws ExceptionManager {
         if(categoryName==null){
             throw new ExceptionManager("parameters can not be null.");
         }
