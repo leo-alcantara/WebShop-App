@@ -12,7 +12,7 @@ public class OrderItem {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private String orderItem;
+    private String orderItemId;
     private Integer amount;
     private BigDecimal itemPrice;
 
@@ -35,21 +35,28 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(String orderItem, Integer amount, BigDecimal itemPrice, Product product, Orders orders) {
-        this.orderItem = orderItem;
+    public OrderItem(String orderItemId, Integer amount, BigDecimal itemPrice, Product product, Orders orders) {
+        this.orderItemId = orderItemId;
         this.amount = amount;
         this.itemPrice = itemPrice;
         this.product = product;
         this.orders = orders;
+        calcPrice();
+    }
+
+    private void calcPrice(){
+
+        itemPrice = product.getProductPrice().multiply(BigDecimal.valueOf(amount));
+
     }
 
 
-    public String getOrderItem() {
-        return orderItem;
+    public String getOrderItemId() {
+        return orderItemId;
     }
 
-    public void setOrderItem(String orderItem) {
-        this.orderItem = orderItem;
+    public void setOrderItemId(String orderItem) {
+        this.orderItemId = orderItem;
     }
 
     public Integer getAmount() {
@@ -100,7 +107,7 @@ public class OrderItem {
     @Override
     public String toString() {
         return "OrderItem{" +
-                "orderItem='" + orderItem + '\'' +
+                "orderItem='" + orderItemId + '\'' +
                 ", amount=" + amount +
                 ", itemPrice=" + itemPrice +
                 ", product=" + product +
