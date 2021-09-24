@@ -17,7 +17,7 @@ public class Orders {
     private String orderId;
     private LocalDate lastUpdated;
     private BigDecimal priceTotal;
-    private Boolean orderStatus;
+    private OrderStatus orderStatus;
 
     @OneToMany(cascade = {CascadeType.DETACH,
             CascadeType.MERGE,
@@ -38,7 +38,7 @@ public class Orders {
     }
 
     public Orders(String orderId, LocalDate lastUpdated, BigDecimal priceTotal,
-                  Boolean orderStatus, Set<OrderItem> orderItems, Customer customer) {
+                  OrderStatus orderStatus, Set<OrderItem> orderItems, Customer customer) {
         this.orderId = orderId;
         this.lastUpdated = lastUpdated;
         this.priceTotal = priceTotal;
@@ -82,11 +82,11 @@ public class Orders {
         this.priceTotal = priceTotal;
     }
 
-    public Boolean getOrderStatus() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Boolean orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
